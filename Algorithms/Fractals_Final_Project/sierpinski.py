@@ -1,6 +1,10 @@
-
+# DEFINING THE FUNCTION
+# Parameter key
+#   - max_order: user can set a maximum fractal depth, defaults to 4
+#   - order: keeps track of depth (or the 'order' of the fractal), starts at 0
+#   - length: controls size of triangle (side length)
 def sierpinski(max_order=4, order=0, length=200):
-    # base case
+    # BASE CASE
     if order == max_order:
         # draw triangle
         for i in range(3):
@@ -8,24 +12,28 @@ def sierpinski(max_order=4, order=0, length=200):
             t.left(120)
         return 
     
+    # RECURSIVE PART
+    ## Save current coordinates
     x,y = t.xcor(), t.ycor()
 
-    # recursive call (bottom left triangle)
+    ## 1st recursive call (bottom left triangle)
     sierpinski(max_order, order+1, length//2)
     t.goto(x+(length//2), y)
 
-    # recursive call (bottom right triangle)
+    ## 2nd recursive call (bottom right triangle)
     sierpinski(max_order, order+1, length//2)
     t.goto(x+(length//4), y+(((3**(1/2))/4)*length))
 
-    # recursive call (top triangle)
+    ## 3rd recursive call (top triangle)
     sierpinski(max_order, order+1, length//2)
     t.goto(x, y)
 
-import turtle as t
-import time
 
-t.pencolor('red')
+# DRAWING THE TRIANGLE FRACTAL
+## Turtle setup and fractal function call
+import turtle as t
+t.speed('fastest')
+t.hideturtle()
 t.setheading(0)
 sierpinski()
 
